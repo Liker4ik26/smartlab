@@ -98,7 +98,6 @@ dependencies {
 
     implementation(libs.coil.compose)
 
-    implementation(libs.accompanist.placeholder)
     implementation(libs.accompanist.switerefreshlayout)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.insets)
