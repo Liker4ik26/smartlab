@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.compose.medicine.smartlab.screens.authorization.presentation.AuthorizationScreen
+import com.compose.medicine.smartlab.screens.verification.presentation.VerificationScreen
 import com.compose.medicine.smartlab.ui.theme.SmartlabTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AuthorizationScreen()
+                    VerificationScreen()
                 }
             }
         }
