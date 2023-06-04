@@ -6,4 +6,5 @@
     <string name="enter">Войдите, чтобы пользоваться функциями приложения</string>
     <string name="enter_e_mail">Вход по E-mail</string>
     <string name="enter_help">Или войдите с помощью</string>
+    <string name="enter_email">Введите код из E-mail</string>
 </resources>
