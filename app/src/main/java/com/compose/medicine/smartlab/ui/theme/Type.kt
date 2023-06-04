@@ -107,5 +107,12 @@ val Typography = Typography(
         fontSize = 12.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp
+    ),
+    headlineMedium = TextStyle(
+        fontFamily = SanFranciscoProDisplay,
+        fontWeight = FontWeight.Normal,
+        fontSize = 34.sp,
+        lineHeight = 28.sp,
+        letterSpacing = 0.5.sp
     )
 )
