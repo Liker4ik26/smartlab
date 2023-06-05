@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">smartlab</string>
+    <string name="create_patient_charts">Создание карты \n пациента</string>
+    <string name="save_patient_charts">В картах пациентов будут храниться результаты \n анализов вас и ваших близких.</string>
+    <string name="you_can_not_order_tests">Без карты пациента вы не сможете заказать анализы.</string>
+    <string name="create">Создать</string>
 </resources>
