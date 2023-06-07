@@ -29,7 +29,9 @@ import com.compose.medicine.smartlab.screens.analyzes.presentation.components.Ne
 import com.compose.medicine.smartlab.screens.analyzes.presentation.components.SearchTextField
 import com.compose.medicine.smartlab.screens.analyzes.presentation.models.AnalysisItemUi
 import com.compose.medicine.smartlab.screens.analyzes.presentation.models.NewsAndStockItemUi
+import com.ramcosta.composedestinations.annotation.Destination
 
+@Destination
 @Composable
 fun AnalyzesScreen(
     viewModel: AnalyzesViewModel = hiltViewModel()

@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,11 +33,17 @@ import com.compose.medicine.smartlab.screens.user_profile.presentation.UserProfi
 import com.compose.medicine.smartlab.screens.user_profile.presentation.components.GenderSelectionMenu
 import com.compose.medicine.smartlab.screens.user_profile.presentation.components.SaveButton
 import com.compose.medicine.smartlab.screens.user_profile.presentation.components.UserProfileTextField
+import com.ramcosta.composedestinations.annotation.Destination
 
+@Destination
 @Composable
 fun UserProfileScreen(viewModel: UserProfileViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+    ) {
 
         Spacer(modifier = Modifier.height(30.dp))
         Text(
