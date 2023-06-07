@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">smartlab</string>
+    <string name="save">Сохранить</string>
 </resources>
