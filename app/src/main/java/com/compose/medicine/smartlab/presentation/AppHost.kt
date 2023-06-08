@@ -54,7 +54,7 @@ fun AppHost() {
         AppNavigation(
             modifier = Modifier.padding(paddingValues),
             navController = navController,
-            startRoute = NavGraphs.analyzes
+            startRoute = NavGraphs.onboard
         )
     }
 }
