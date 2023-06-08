@@ -7,16 +7,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.compose.medicine.smartlab.screens.password.presentation.PasswordScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
+import com.compose.medicine.smartlab.presentation.AppHost
 import com.compose.medicine.smartlab.screens.password.presentation.components.PinManager
 import com.compose.medicine.smartlab.ui.theme.SmartlabTheme
 import dagger.hilt.android.AndroidEntryPoint
-import com.compose.medicine.smartlab.presentation.AppHost
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             PinManager.initialize(this)
             SmartlabTheme {
