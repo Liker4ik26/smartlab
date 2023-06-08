@@ -1,10 +1,7 @@
-package com.compose.medicine.smartlab.screens.patient_charts
+package com.compose.medicine.smartlab.screens.patient_charts.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.compose.medicine.smartlab.screens.patient_charts.presentation.PatientChartsEffect
-import com.compose.medicine.smartlab.screens.patient_charts.presentation.PatientChartsUiEvent
-import com.compose.medicine.smartlab.screens.patient_charts.presentation.PatientChartsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

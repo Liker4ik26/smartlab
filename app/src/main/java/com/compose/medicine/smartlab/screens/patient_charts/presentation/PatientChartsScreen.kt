@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -21,18 +23,20 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.compose.medicine.smartlab.R
-import com.compose.medicine.smartlab.screens.patient_charts.PatientChartsViewModel
 import com.compose.medicine.smartlab.screens.patient_charts.presentation.components.CreateButton
 import com.compose.medicine.smartlab.screens.patient_charts.presentation.components.GenderSelectionMenu
 import com.compose.medicine.smartlab.screens.patient_charts.presentation.components.InfoPatientTextField
+import com.ramcosta.composedestinations.annotation.Destination
 
+@Destination
 @Composable
 fun PatientChartsScreen(viewModel: PatientChartsViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 40.dp),
+            .padding(horizontal = 20.dp, vertical = 40.dp)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.Start
     ) {
         Row(

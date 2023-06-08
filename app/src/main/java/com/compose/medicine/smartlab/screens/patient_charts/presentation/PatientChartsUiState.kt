@@ -1,6 +1,6 @@
 package com.compose.medicine.smartlab.screens.patient_charts.presentation
 
-import javax.annotation.concurrent.Immutable
+import androidx.compose.runtime.Immutable
 
 @Immutable
 data class PatientChartsUiState(
