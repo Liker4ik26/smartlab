@@ -9,4 +9,11 @@
     <string name="monitoring">Мониторинг</string>
     <string name="observation">Наши врачи всегда наблюдают \n за вашими показателями здоровья </string>
     <string name="save">Сохранить</string>
+    <string name="example_mail_ru">example@mail.ru</string>
+    <string name="next">Далее</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="enter">Войдите, чтобы пользоваться функциями приложения</string>
+    <string name="enter_e_mail">Вход по E-mail</string>
+    <string name="enter_help">Или войдите с помощью</string>
+    <string name="enter_email">Введите код из E-mail</string>
 </resources>
