@@ -25,7 +25,7 @@ fun UserButton(
             containerColor = Color(0xFF1A6FEE),
             disabledContainerColor = Color(0xFFC9D4FB)
         ),
-        onClick = { onClick }) {
+        onClick = { onClick() }) {
         Text(
             text = stringResource(id = textButton),
             color = Color.White,
