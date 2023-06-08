@@ -14,10 +14,11 @@ data class VerificationUiState(
 
 sealed class VerificationUiEvent {
     class OnPinInput(val pin: String) : VerificationUiEvent()
-    object OnNavigateToHomeScreen : VerificationUiEvent()
+    object OnNavigateToPasswordScreen : VerificationUiEvent()
     object OnNavigateBack : VerificationUiEvent()
 }
 
 sealed class VerificationEffect {
     object NavigateBack : VerificationEffect()
+    object NavigateToPasswordScreen : VerificationEffect()
 }

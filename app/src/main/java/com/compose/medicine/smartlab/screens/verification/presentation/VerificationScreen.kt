@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,12 +20,12 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -35,12 +34,37 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.compose.medicine.smartlab.R
-import java.util.Timer
+import com.ramcosta.composedestinations.annotation.Destination
+
+@Destination
+@Composable
+fun VerificationScreen(
+    navigation: VerificationNavigation
+) {
+    VerificationScreen(
+        onNavigateBack = navigation::navigateBack,
+        onNavigateToPasswordScreen = navigation::navigateToPasswordScreen
+    )
+}
 
 @Composable
-fun VerificationScreen(viewModel: VerificationViewModel = hiltViewModel()) {
+private fun VerificationScreen(
+    viewModel: VerificationViewModel = hiltViewModel(),
+    onNavigateBack: () -> Unit,
+    onNavigateToPasswordScreen: () -> Unit
+
+) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is VerificationEffect.NavigateBack -> onNavigateBack()
+                is VerificationEffect.NavigateToPasswordScreen -> onNavigateToPasswordScreen()
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -48,7 +72,9 @@ fun VerificationScreen(viewModel: VerificationViewModel = hiltViewModel()) {
             .fillMaxWidth()
     ) {
         IconButton(
-            onClick = {},
+            onClick = {
+                viewModel.sendEvent(VerificationUiEvent.OnNavigateBack)
+            },
             colors = IconButtonDefaults.iconButtonColors(containerColor = Color(0xFFF5F5F9)),
             modifier = Modifier
                 .padding(15.dp)
@@ -59,7 +85,10 @@ fun VerificationScreen(viewModel: VerificationViewModel = hiltViewModel()) {
             )
         }
         Spacer(modifier = Modifier.height(132.dp))
-        Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Text(
                 text = stringResource(R.string.enter_email),
                 style = MaterialTheme.typography.titleSmall,
@@ -70,6 +99,7 @@ fun VerificationScreen(viewModel: VerificationViewModel = hiltViewModel()) {
                 value = state.pin,
                 onValueChange = {
                     state.pin = viewModel.sendEvent(VerificationUiEvent.OnPinInput(it)).toString()
+                    viewModel.sendEvent(VerificationUiEvent.OnNavigateToPasswordScreen)
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                 decorationBox = {

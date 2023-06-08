@@ -23,8 +23,12 @@ class VerificationViewModel @Inject constructor() : ViewModel() {
 
     fun sendEvent(event: VerificationUiEvent) {
         when (event) {
-            is VerificationUiEvent.OnNavigateToHomeScreen -> {
-                viewModelScope.launch { }
+            is VerificationUiEvent.OnNavigateToPasswordScreen -> {
+                viewModelScope.launch {
+                    if (_state.value.pin.length == 4){
+                        _effect.emit(VerificationEffect.NavigateToPasswordScreen)
+                    }
+                }
             }
 
             is VerificationUiEvent.OnPinInput -> {
@@ -34,7 +38,9 @@ class VerificationViewModel @Inject constructor() : ViewModel() {
             }
 
             is VerificationUiEvent.OnNavigateBack -> {
-                viewModelScope.launch { }
+                viewModelScope.launch {
+                    _effect.emit(VerificationEffect.NavigateBack)
+                }
             }
         }
     }
