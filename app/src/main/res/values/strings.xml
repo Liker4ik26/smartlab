@@ -16,4 +16,8 @@
     <string name="enter_e_mail">Вход по E-mail</string>
     <string name="enter_help">Или войдите с помощью</string>
     <string name="enter_email">Введите код из E-mail</string>
+    <string name="create_patient_charts">Создание карты \n пациента</string>
+    <string name="save_patient_charts">В картах пациентов будут храниться результаты \n анализов вас и ваших близких.</string>
+    <string name="you_can_not_order_tests">Без карты пациента вы не сможете заказать анализы.</string>
+    <string name="create">Создать</string>
 </resources>
