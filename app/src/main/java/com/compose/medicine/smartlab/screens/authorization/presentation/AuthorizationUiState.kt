@@ -1,11 +1,12 @@
 package com.compose.medicine.smartlab.screens.authorization.presentation
 
-import javax.annotation.concurrent.Immutable
+import androidx.compose.runtime.Immutable
 
 @Immutable
 data class AuthorizationUiState(
     val email: String = "",
-    val isError: Boolean = false
+    val isError: Boolean = false,
+    val isEnabled: Boolean = false
 ) {
     companion object {
         val Empty = AuthorizationUiState()
@@ -14,9 +15,9 @@ data class AuthorizationUiState(
 
 sealed class AuthorizationUiEvent {
     class OnEmailInput(val email: String) : AuthorizationUiEvent()
-    object OnNavigateToHomeScreen : AuthorizationUiEvent()
+    object OnNavigateToVerificationScreen : AuthorizationUiEvent()
 }
 
 sealed class AuthorizationEffect {
-    object NavigateToHomeScreen : AuthorizationEffect()
+    object NavigateToVerificationScreen : AuthorizationEffect()
 }

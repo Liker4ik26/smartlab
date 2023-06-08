@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,22 +31,34 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.compose.medicine.smartlab.R
 import com.compose.medicine.smartlab.screens.authorization.presentation.components.UserButton
 import com.compose.medicine.smartlab.screens.authorization.presentation.components.UserTextField
+import com.ramcosta.composedestinations.annotation.Destination
 
+@Destination
 @Composable
-fun AuthorizationScreen() {
+fun AuthorizationScreen(navigation: AuthorizationScreenNavigation) {
     AuthorizationScreen(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)
+            .padding(horizontal = 20.dp),
+        onNavigateToVerificationScreen = navigation::navigateToVerificationScreen
     )
 }
 
 @Composable
 private fun AuthorizationScreen(
     modifier: Modifier = Modifier,
-    viewModel: AuthorizationViewModel = hiltViewModel()
+    viewModel: AuthorizationViewModel = hiltViewModel(),
+    onNavigateToVerificationScreen: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is AuthorizationEffect.NavigateToVerificationScreen -> onNavigateToVerificationScreen()
+            }
+        }
+    }
 
     Column(modifier = modifier) {
         Row(
@@ -79,7 +93,7 @@ private fun AuthorizationScreen(
             modifier = Modifier.fillMaxWidth(),
             text = state.email,
             hint = stringResource(R.string.example_mail_ru),
-            isError = false
+            isError = state.isError
         ) {
             viewModel.sendEvent(AuthorizationUiEvent.OnEmailInput(it))
         }
@@ -89,12 +103,14 @@ private fun AuthorizationScreen(
                 .fillMaxWidth()
                 .height(56.dp),
             textButton = R.string.next,
-            onClick = { },
-            isEnabled = false
+            onClick = { viewModel.sendEvent(AuthorizationUiEvent.OnNavigateToVerificationScreen) },
+            isEnabled = state.isEnabled
         )
     }
     Column(
-        modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 56.dp),
+        modifier = Modifier
+            .fillMaxHeight()
+            .padding(start = 20.dp, end = 20.dp, bottom = 56.dp),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
