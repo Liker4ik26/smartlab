@@ -9,7 +9,7 @@ core-ktx = "1.10.1"
 coroutines = "1.6.4"
 lifecycle-runtime-compose = "2.6.1"
 ksp = "1.8.20-1.0.10"
-compose = "1.4.3"
+compose = "1.5.0-beta01"
 splashscreen = "1.0.1"
 activity = "1.7.2"
 lifecycle = "2.6.1"
@@ -27,7 +27,6 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 appcompat = "1.6.1"
 material = "1.9.0"
-org-jetbrains-kotlin-jvm = "1.8.20"
 
 [libraries]
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore-preferences" }
@@ -63,7 +62,7 @@ compose-destinations = { group = "io.github.raamcosta.compose-destinations", nam
 compose-destinations-compiler = { group = "io.github.raamcosta.compose-destinations", name = "ksp", version.ref = "destinations" }
 
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
-hilt-viewmodel = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-compose"}
+hilt-viewmodel = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-compose" }
 hilt-kapt = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
@@ -93,4 +92,3 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
