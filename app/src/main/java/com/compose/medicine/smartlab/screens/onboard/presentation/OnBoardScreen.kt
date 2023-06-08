@@ -26,6 +26,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,12 +36,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.compose.medicine.smartlab.R
 import com.compose.medicine.smartlab.screens.onboard.presentation.models.OnBoardingPage
+import com.ramcosta.composedestinations.annotation.Destination
+import kotlinx.coroutines.launch
 
+@Destination
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(navigator: OnBoardScreenNavigation) {
     val pages = listOf(OnBoardingPage.First, OnBoardingPage.Second, OnBoardingPage.Third)
     val pagerState = rememberPagerState(
         initialPage = 0,
@@ -58,7 +64,11 @@ fun WelcomeScreen() {
                 Orientation.Horizontal
             ),
             pageContent = { position ->
-                OnBoardScreen(onBoardingPage = pages[position], pagerState = pagerState)
+                OnBoardScreen(
+                    onBoardingPage = pages[position],
+                    pagerState = pagerState,
+                    navigateToSignIn = navigator::navigateToSignIn
+                )
             }
         )
     }
@@ -66,10 +76,32 @@ fun WelcomeScreen() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnBoardScreen(onBoardingPage: OnBoardingPage, pagerState: PagerState) {
+fun OnBoardScreen(
+    viewModel: OnBoardViewModel = hiltViewModel(),
+    onBoardingPage: OnBoardingPage,
+    pagerState: PagerState,
+    navigateToSignIn: () -> Unit
+) {
+    val coroutineScope = rememberCoroutineScope()
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                OnBoardUiEffect.NavigateToSignIn -> navigateToSignIn()
+            }
+
+        }
+    }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            TextButton(onClick = { }) {
+            TextButton(onClick = {
+                coroutineScope.launch {
+                    if (pagerState.currentPage != 2) {
+                        pagerState.scrollToPage(pagerState.currentPage + 1)
+                    } else {
+                        viewModel.sendEvent(OnBoardUiEvent.OnNavigateToSignIn)
+                    }
+                }
+            }) {
                 Text(
                     text = stringResource(onBoardingPage.buttonUp),
                     color = Color(0xff57A9FF),
