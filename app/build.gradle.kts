@@ -72,6 +72,7 @@ dependencies {
 
     implementation(libs.moshi.kotlin)
     implementation(libs.moshi.adapters)
+    implementation(libs.androidx.constraintlayout.compose)
     ksp(libs.moshi.compiler)
 
     implementation(libs.okhttp.client)
@@ -89,6 +90,8 @@ dependencies {
     implementation(libs.compose.destinations)
     implementation(libs.hilt.viewmodel)
     ksp(libs.compose.destinations.compiler)
+
+    implementation(libs.security)
 
     implementation(libs.androidx.splashscreen)
 
