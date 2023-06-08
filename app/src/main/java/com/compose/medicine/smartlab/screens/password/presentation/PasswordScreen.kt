@@ -11,14 +11,40 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.compose.medicine.smartlab.screens.password.presentation.components.PinLock
+import com.ramcosta.composedestinations.annotation.Destination
+
+@Destination
+@Composable
+fun PasswordScreen(
+    navigation: PasswordNavigation
+) {
+    PasswordScreen(onNavigateToPatientCharts = navigation::navigateToPatientCharts)
+}
+
 
 @Composable
-fun PasswordScreen() {
+private fun PasswordScreen(
+    viewModel: PasswordViewModel = hiltViewModel(),
+    onNavigateToPatientCharts: () -> Unit
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is PasswordEffect.NavigateToPatientCharts -> onNavigateToPatientCharts()
+            }
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -29,7 +55,9 @@ fun PasswordScreen() {
             verticalAlignment = Alignment.Top,
             horizontalArrangement = Arrangement.End
         ) {
-            TextButton(onClick = { /*TODO*/ }) {
+            TextButton(onClick = {
+                viewModel.sendEvent(PasswordUiEvent.OnNavigateToPatientCharts)
+            }) {
                 Text(
                     text = "Пропустить",
                     style = MaterialTheme.typography.bodyMedium,
