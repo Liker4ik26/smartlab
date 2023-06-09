@@ -1,6 +1,5 @@
 package com.compose.medicine.smartlab.screens.authorization.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -51,7 +50,6 @@ class AuthorizationViewModel @Inject constructor() : ViewModel() {
                         isEnabled = true
                     )
                 }
-                Log.d("f", "f")
                 _effect.emit(AuthorizationEffect.NavigateToVerificationScreen)
             }
         } else {
