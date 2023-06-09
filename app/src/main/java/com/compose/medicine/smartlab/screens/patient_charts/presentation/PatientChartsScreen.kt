@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,8 +31,28 @@ import com.ramcosta.composedestinations.annotation.Destination
 
 @Destination
 @Composable
-fun PatientChartsScreen(viewModel: PatientChartsViewModel = hiltViewModel()) {
+fun PatientChartsScreen(navigation: PatientChartsNavigation) {
+    PatientChartsScreen(
+        onNavigateToAnalyzes = navigation::navigateToAnalyzesScreen,
+        onNavigateSkip = navigation::navigateToAnalyzesScreen
+    )
+}
+
+@Composable
+private fun PatientChartsScreen(
+    viewModel: PatientChartsViewModel = hiltViewModel(),
+    onNavigateToAnalyzes: () -> Unit,
+    onNavigateSkip: () -> Unit
+) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is PatientChartsEffect.NavigateToAnalyzes -> onNavigateToAnalyzes()
+                is PatientChartsEffect.NavigateSkip -> onNavigateSkip()
+            }
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -49,7 +70,7 @@ fun PatientChartsScreen(viewModel: PatientChartsViewModel = hiltViewModel()) {
                 style = MaterialTheme.typography.titleLarge,
                 color = Color.Black
             )
-            TextButton(onClick = { /*TODO*/ }) {
+            TextButton(onClick = { viewModel.sendEvent(PatientChartsUiEvent.OnNavigateSkip) }) {
                 Text(
                     text = "Пропустить",
                     style = MaterialTheme.typography.bodyMedium,
@@ -76,7 +97,7 @@ fun PatientChartsScreen(viewModel: PatientChartsViewModel = hiltViewModel()) {
             modifier = Modifier.fillMaxWidth(),
             text = state.name,
             hint = "Имя",
-            isError = false,
+            isError = state.isError,
             onType = {
                 viewModel.sendEvent(PatientChartsUiEvent.OnNameInput(it))
             }
@@ -84,9 +105,9 @@ fun PatientChartsScreen(viewModel: PatientChartsViewModel = hiltViewModel()) {
         Spacer(modifier = Modifier.height(24.dp))
         InfoPatientTextField(
             modifier = Modifier.fillMaxWidth(),
-            text = state.lastName,
+            text = state.patronymic,
             hint = "Отчество",
-            isError = false,
+            isError = state.isError,
             onType = { viewModel.sendEvent(PatientChartsUiEvent.OnPatronymicInput(it)) }
         )
         Spacer(modifier = Modifier.height(24.dp))
@@ -94,7 +115,7 @@ fun PatientChartsScreen(viewModel: PatientChartsViewModel = hiltViewModel()) {
             modifier = Modifier.fillMaxWidth(),
             text = state.lastName,
             hint = "Фамилия",
-            isError = false,
+            isError = state.isError,
             onType = { viewModel.sendEvent(PatientChartsUiEvent.OnLastNameInput(it)) }
         )
         Spacer(modifier = Modifier.height(24.dp))
@@ -102,7 +123,7 @@ fun PatientChartsScreen(viewModel: PatientChartsViewModel = hiltViewModel()) {
             modifier = Modifier.fillMaxWidth(),
             text = state.birthdate,
             hint = "Дата рождения",
-            isError = false,
+            isError = state.isError,
             onType = { viewModel.sendEvent(PatientChartsUiEvent.OnBirthdateInput(it)) }
         )
         Spacer(modifier = Modifier.height(24.dp))
@@ -113,8 +134,8 @@ fun PatientChartsScreen(viewModel: PatientChartsViewModel = hiltViewModel()) {
                 .fillMaxWidth()
                 .height(56.dp),
             textButton = R.string.create,
-            onClick = { /*TODO*/ },
-            isEnabled = false
+            onClick = { viewModel.sendEvent(PatientChartsUiEvent.OnNavigateToAnalyzes) },
+            isEnabled = state.isEnabled
         )
     }
 }

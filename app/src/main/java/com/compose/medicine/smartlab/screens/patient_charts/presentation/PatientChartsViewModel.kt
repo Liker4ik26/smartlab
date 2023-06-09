@@ -22,27 +22,107 @@ class PatientChartsViewModel @Inject constructor() : ViewModel() {
 
     fun sendEvent(event: PatientChartsUiEvent) {
         when (event) {
-            is PatientChartsUiEvent.OnNavigateToHomeScreen -> {
-                viewModelScope.launch { }
+            is PatientChartsUiEvent.OnNavigateSkip -> {
+                viewModelScope.launch {
+                    _effect.emit(PatientChartsEffect.NavigateSkip)
+                }
+            }
+
+            is PatientChartsUiEvent.OnNavigateToAnalyzes -> {
+                checkFillAllField()
             }
 
             is PatientChartsUiEvent.OnNameInput -> {
-                viewModelScope.launch { _state.update { it.copy(name = event.name) } }
+                viewModelScope.launch {
+                    _state.update { state ->
+                        if (event.name.isEmpty()) {
+                            state.copy(name = event.name, isEnabled = false, isError = true)
+                        } else {
+                            state.copy(name = event.name, isEnabled = true, isError = false)
+                        }
+                    }
+                }
             }
 
             is PatientChartsUiEvent.OnLastNameInput -> {
                 viewModelScope.launch {
-                    _state.update { it.copy(lastName = event.lastName) }
+                    _state.update { state ->
+                        if (event.lastName.isEmpty()) {
+                            state.copy(lastName = event.lastName, isEnabled = false, isError = true)
+                        } else {
+                            state.copy(lastName = event.lastName, isEnabled = true, isError = false)
+                        }
+                    }
                 }
             }
 
             is PatientChartsUiEvent.OnPatronymicInput -> {
-                viewModelScope.launch { _state.update { it.copy(patronymic = event.patronymic) } }
+                viewModelScope.launch {
+                    _state.update { state ->
+                        if (event.patronymic.isEmpty()) {
+                            state.copy(
+                                patronymic = event.patronymic,
+                                isEnabled = false,
+                                isError = true
+                            )
+                        } else {
+                            state.copy(
+                                patronymic = event.patronymic,
+                                isEnabled = true,
+                                isError = false
+                            )
+                        }
+                    }
+                }
             }
 
             is PatientChartsUiEvent.OnBirthdateInput -> {
-                viewModelScope.launch { _state.update { it.copy(birthdate = event.birthdate) } }
+                viewModelScope.launch {
+                    _state.update { state ->
+                        if (event.birthdate.isEmpty()) {
+
+                            state.copy(
+                                birthdate = event.birthdate,
+                                isEnabled = false,
+                                isError = true
+                            )
+                        } else {
+                            state.copy(
+                                birthdate = event.birthdate,
+                                isEnabled = true,
+                                isError = false
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun checkFillAllField() {
+        if (_state.value.name.isEmpty() &&
+            _state.value.lastName.isEmpty() &&
+            _state.value.patronymic.isEmpty() &&
+            _state.value.birthdate.isEmpty()
+        ) {
+            _state.update {
+                it.copy(
+                    isError = true,
+                    isEnabled = false
+                )
+            }
+        } else {
+            viewModelScope.launch {
+                _state.update {
+                    it.copy(
+                        isError = false,
+                        isEnabled = true
+                    )
+                }
+                _effect.emit(PatientChartsEffect.NavigateToAnalyzes)
             }
         }
     }
 }
+
+
