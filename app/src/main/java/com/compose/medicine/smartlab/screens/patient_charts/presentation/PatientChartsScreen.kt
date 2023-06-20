@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.compose.medicine.smartlab.R
+import com.compose.medicine.smartlab.core_ui.components.InfoPatientTextField
 import com.compose.medicine.smartlab.screens.patient_charts.presentation.components.CreateButton
 import com.compose.medicine.smartlab.screens.patient_charts.presentation.components.GenderSelectionMenu
-import com.compose.medicine.smartlab.screens.patient_charts.presentation.components.InfoPatientTextField
 import com.ramcosta.composedestinations.annotation.Destination
 
 @Destination
