@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.plusAssign
 import com.compose.medicine.smartlab.core_ui.currentBottomItemToState
+import com.compose.medicine.smartlab.navigation.NavGraphs
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
@@ -36,6 +38,7 @@ fun AppHost() {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        contentWindowInsets = WindowInsets(0.dp),
         containerColor = Color(0xFFFCFCFE),
         bottomBar = {
             AnimatedVisibility(
@@ -63,7 +66,7 @@ fun AppHost() {
         AppNavigation(
             modifier = Modifier.padding(paddingValues),
             navController = navController,
-//            startRoute = NavGraphs.onboard,
+            startRoute = NavGraphs.splash,
             bottomSheetNavigator = bottomSheetNavigator
         )
     }

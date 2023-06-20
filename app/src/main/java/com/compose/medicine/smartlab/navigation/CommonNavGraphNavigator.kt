@@ -17,6 +17,7 @@ import com.compose.medicine.smartlab.screens.onboard.presentation.OnBoardScreenN
 import com.compose.medicine.smartlab.screens.password.presentation.PasswordNavigation
 import com.compose.medicine.smartlab.screens.patient_charts.presentation.PatientChartsNavigation
 import com.compose.medicine.smartlab.screens.patient_choice.presentation.PatientChoiceNavigation
+import com.compose.medicine.smartlab.screens.splash.presentation.SplashNavigation
 import com.compose.medicine.smartlab.screens.testing_address.presentation.TestingAddressNavigation
 import com.compose.medicine.smartlab.screens.verification.presentation.VerificationNavigation
 import com.ramcosta.composedestinations.dynamic.within
@@ -29,7 +30,8 @@ class CommonNavGraphNavigator(
     private val navController: NavController
 ) : OnBoardScreenNavigation, AuthorizationScreenNavigation, VerificationNavigation,
     PasswordNavigation, PatientChartsNavigation, AnalysisDetailsNavigation, AnalysisNavigation,
-    BasketNavigation, CheckoutNavigation, TestingAddressNavigation, PatientChoiceNavigation {
+    BasketNavigation, CheckoutNavigation, TestingAddressNavigation, PatientChoiceNavigation,
+    SplashNavigation {
     override fun navigateToSignIn() {
         navController.navigate(NavGraphs.authorization)
     }
@@ -76,5 +78,9 @@ class CommonNavGraphNavigator(
 
     override fun navigateToDateAndTimeScreen() {
         navController.navigate(DateAndTimeScreenDestination within navGraph)
+    }
+
+    override fun navigateToOnboardScreen() {
+        navController.navigate(NavGraphs.onboard)
     }
 }

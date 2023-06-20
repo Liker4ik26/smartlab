@@ -9,6 +9,7 @@ import com.compose.medicine.smartlab.screens.destinations.DateAndTimeScreenDesti
 import com.compose.medicine.smartlab.screens.destinations.PasswordScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.PatientChartsScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.PatientChoiceScreenDestination
+import com.compose.medicine.smartlab.screens.destinations.SplashScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.TestingAddressScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.UserProfileScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.VerificationScreenDestination
@@ -91,11 +92,21 @@ object NavGraphs {
         ).routedIn(this).associateBy { it.route }
     }
 
+    val splash = object : NavGraphSpec {
+        override val route = "splash"
+        override val startRoute = SplashScreenDestination routedIn this
+        override val destinationsByRoute = listOf<DestinationSpec<*>>(
+            SplashScreenDestination,
+            WelcomeScreenDestination
+        ).routedIn(this).associateBy { it.route }
+    }
+
     val root = object : NavGraphSpec {
         override val route = "root"
-        override val startRoute = analyzes
+        override val startRoute = splash
         override val destinationsByRoute = emptyMap<String, DestinationSpec<*>>()
         override val nestedNavGraphs = listOf(
+            splash,
             analyzes,
             onboard,
             profile,
