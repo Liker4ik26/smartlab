@@ -27,7 +27,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 fun PasswordScreen(
     navigation: PasswordNavigation
 ) {
-    PasswordScreen(onNavigateToPatientCharts = navigation::navigateToPatientCharts)
+    PasswordScreen(onNavigateToPatientCharts = navigation::navigateToPatientChartsScreen)
 }
 
 
