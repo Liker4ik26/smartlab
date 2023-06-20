@@ -16,16 +16,14 @@ import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
 import com.ramcosta.composedestinations.navigation.dependency
-import com.ramcosta.composedestinations.rememberNavHostEngine
-import com.ramcosta.composedestinations.spec.Route
 
 @OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun AppNavigation(
     navController: NavHostController,
-    startRoute: Route,
+//    startRoute: Route,
     modifier: Modifier = Modifier,
-    bottomSheetNavigator : BottomSheetNavigator
+    bottomSheetNavigator: BottomSheetNavigator
 ) {
     ModalBottomSheetLayout(
         bottomSheetNavigator = bottomSheetNavigator,
@@ -37,7 +35,7 @@ fun AppNavigation(
             navGraph = NavGraphs.root,
             navController = navController,
             engine = rememberAnimatedNavHostEngine(),
-            startRoute = startRoute,
+//            startRoute = startRoute,
             dependenciesContainerBuilder = { dependency(currentNavigator(LocalContext.current)) }
         )
     }

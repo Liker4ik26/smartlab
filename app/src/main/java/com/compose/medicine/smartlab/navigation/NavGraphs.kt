@@ -1,9 +1,15 @@
 package com.compose.medicine.smartlab.navigation
 
+import com.compose.medicine.smartlab.screens.destinations.AnalysisDetailsScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.AnalyzesScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.AuthorizationScreenDestination
+import com.compose.medicine.smartlab.screens.destinations.BasketScreenDestination
+import com.compose.medicine.smartlab.screens.destinations.CheckoutScreenDestination
+import com.compose.medicine.smartlab.screens.destinations.DateAndTimeScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.PasswordScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.PatientChartsScreenDestination
+import com.compose.medicine.smartlab.screens.destinations.PatientChoiceScreenDestination
+import com.compose.medicine.smartlab.screens.destinations.TestingAddressScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.UserProfileScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.VerificationScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.WelcomeScreenDestination
@@ -16,7 +22,9 @@ object NavGraphs {
         override val route = "analyzes"
         override val startRoute = AnalyzesScreenDestination routedIn this
         override val destinationsByRoute = listOf<DestinationSpec<*>>(
-            AnalyzesScreenDestination
+            AnalyzesScreenDestination,
+            BasketScreenDestination,
+            AnalysisDetailsScreenDestination
         ).routedIn(this).associateBy { it.route }
     }
     val profile = object : NavGraphSpec {
@@ -65,12 +73,38 @@ object NavGraphs {
         ).routedIn(this).associateBy { it.route }
     }
 
+    val basket = object : NavGraphSpec {
+        override val route = "basket"
+        override val startRoute = BasketScreenDestination routedIn this
+        override val destinationsByRoute = listOf<DestinationSpec<*>>(
+            BasketScreenDestination
+        ).routedIn(this).associateBy { it.route }
+    }
+    val checkout = object : NavGraphSpec {
+        override val route = "checkout"
+        override val startRoute = CheckoutScreenDestination routedIn this
+        override val destinationsByRoute = listOf<DestinationSpec<*>>(
+            CheckoutScreenDestination,
+            TestingAddressScreenDestination,
+            DateAndTimeScreenDestination,
+            PatientChoiceScreenDestination
+        ).routedIn(this).associateBy { it.route }
+    }
+
     val root = object : NavGraphSpec {
         override val route = "root"
-        override val startRoute = onboard
+        override val startRoute = analyzes
         override val destinationsByRoute = emptyMap<String, DestinationSpec<*>>()
         override val nestedNavGraphs = listOf(
-            analyzes, onboard, profile, authorization, verification, password, patient_chart
+            analyzes,
+            onboard,
+            profile,
+            authorization,
+            verification,
+            password,
+            patient_chart,
+            basket,
+            checkout
         )
     }
 }
