@@ -3,32 +3,51 @@ package com.compose.medicine.smartlab.screens.analyzes.presentation.components
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.compose.medicine.smartlab.screens.analyzes.presentation.models.CategoryItemUi
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategoryCard(title: String, isEnable: Boolean, onClick: () -> Unit) {
-    Button(
+fun CategoryCard(
+    categoryItemUi: CategoryItemUi,
+    onAdd: () -> Unit,
+    onRemove: () -> Unit,
+    selectedCategory: Int,
+) {
+    FilterChip(
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp),
+        selected = selectedCategory == categoryItemUi.id,
+        border = FilterChipDefaults.filterChipBorder(Color.Transparent),
         shape = RoundedCornerShape(10.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = if (isEnable) Color(0xFF1A6FEE) else Color(0xFFF5F5F9)
+        colors = FilterChipDefaults.filterChipColors(
+            containerColor = Color(0xFFF5F5F9),
+            selectedContainerColor = Color(0xFF1A6FEE)
         ),
-        enabled = isEnable,
-        onClick = { onClick() }
-    ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.bodyMedium,
-            color = if (isEnable) Color.White else Color(0xFF7E7E9A)
-        )
-    }
+        label = {
+            Text(
+                text = categoryItemUi.name,
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (selectedCategory == categoryItemUi.id) Color.White else Color(
+                    0xFF7E7E9A
+                )
+            )
+        },
+        onClick = {
+            if (selectedCategory == categoryItemUi.id) {
+                onRemove()
+            } else {
+                onAdd()
+            }
+        }
+    )
 }

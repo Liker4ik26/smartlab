@@ -29,6 +29,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import com.compose.medicine.smartlab.core_ui.components.BodyTextFieldHint
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -98,6 +99,5 @@ fun GenderSelectionMenu() {
                 })
             }
         }
-
     }
 }
