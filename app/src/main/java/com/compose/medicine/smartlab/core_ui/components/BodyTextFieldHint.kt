@@ -1,4 +1,4 @@
-package com.compose.medicine.smartlab.screens.patient_charts.presentation.components
+package com.compose.medicine.smartlab.core_ui.components
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text

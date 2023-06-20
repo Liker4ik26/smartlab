@@ -1,7 +1,8 @@
-package com.compose.medicine.smartlab.screens.patient_charts.presentation.components
+package com.compose.medicine.smartlab.core_ui.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -17,7 +18,8 @@ fun InfoPatientTextField(
     modifier: Modifier = Modifier,
     hint: String,
     isError: Boolean,
-    onType: (String) -> Unit
+    onType: (String) -> Unit,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ) {
     TextField(
         value = text,
@@ -25,7 +27,9 @@ fun InfoPatientTextField(
         placeholder = { BodyTextFieldHint(text = hint) },
         singleLine = true,
         isError = isError,
+        shape = RoundedCornerShape(10.dp),
         maxLines = 1,
+        keyboardOptions = keyboardOptions,
         modifier = modifier.border(
             1.dp,
             color = if (isError) Color.Red else Color(0xFFEBEBEB), shape = RoundedCornerShape(10.dp)
@@ -35,6 +39,7 @@ fun InfoPatientTextField(
             containerColor = Color(0xFFF5F5F9),
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
+            errorIndicatorColor = Color.Transparent,
             errorTextColor = Color.Red
         )
     )
