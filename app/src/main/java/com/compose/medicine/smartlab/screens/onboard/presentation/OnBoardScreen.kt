@@ -52,7 +52,9 @@ fun WelcomeScreen(navigator: OnBoardScreenNavigation) {
         initialPageOffsetFraction = 0f
     ) { 3 }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(top = 40.dp)) {
         HorizontalPager(
             state = pagerState,
             userScrollEnabled = true,
@@ -109,7 +111,7 @@ fun OnBoardScreen(
                 )
             }
             Image(
-                painter = painterResource(id = R.drawable.plus), contentDescription = null,
+                painter = painterResource(id = R.drawable.medic_plus), contentDescription = null,
                 modifier = Modifier.size(height = 164.dp, width = 168.dp)
             )
         }
