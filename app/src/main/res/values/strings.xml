@@ -20,4 +20,8 @@
     <string name="save_patient_charts">В картах пациентов будут храниться результаты \n анализов вас и ваших близких.</string>
     <string name="you_can_not_order_tests">Без карты пациента вы не сможете заказать анализы.</string>
     <string name="create">Создать</string>
+    <string name="retry">Retry</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="errorimage">ErrorImage</string>
+    <string name="error_image">error_image</string>
 </resources>

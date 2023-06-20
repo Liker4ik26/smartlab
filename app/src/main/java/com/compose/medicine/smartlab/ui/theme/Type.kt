@@ -79,6 +79,7 @@ val Typography = Typography(
     ),
     displayMedium = TextStyle(
         fontFamily = SanFranciscoProDisplay,
+        fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.5.sp
@@ -109,5 +110,17 @@ val Typography = Typography(
         fontSize = 34.sp,
         lineHeight = 28.sp,
         letterSpacing = 0.5.sp
-    )
+    ),
+    headlineLarge = TextStyle(
+        fontFamily = SanFranciscoProDisplay,
+        fontWeight = FontWeight.ExtraBold,
+        fontSize = 14.sp,
+        letterSpacing = 0.5.sp
+    ),
+    labelSmall = TextStyle(
+        fontFamily = SanFranciscoProDisplay,
+        fontWeight = FontWeight.Normal,
+        fontSize = 10.sp,
+        letterSpacing = 0.5.sp
+    ),
 )
