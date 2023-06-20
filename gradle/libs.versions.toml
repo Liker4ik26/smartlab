@@ -9,7 +9,7 @@ core-ktx = "1.10.1"
 coroutines = "1.6.4"
 lifecycle-runtime-compose = "2.6.1"
 ksp = "1.8.20-1.0.10"
-compose = "1.5.0-beta01"
+compose = "1.5.0-beta02"
 splashscreen = "1.0.1"
 activity = "1.7.2"
 lifecycle = "2.6.1"
@@ -28,12 +28,17 @@ espresso-core = "3.5.1"
 appcompat = "1.6.1"
 material = "1.9.0"
 security-crypto = "1.1.0-alpha06"
+accompanist-navigation = "0.31.3-beta"
+room-version = "2.5.1"
+paging-compose = "1.0.0-alpha20"
 
 [libraries]
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore-preferences" }
 savedstate = "androidx.savedstate:savedstate:1.2.1"
 
-security= { group = "androidx.security", name = "security-crypto", version.ref = "security-crypto" }
+androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging-compose" }
+
+security = { group = "androidx.security", name = "security-crypto", version.ref = "security-crypto" }
 
 kotlin-gradle = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 android-gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
@@ -42,6 +47,10 @@ google-ksp = { group = "com.google.devtools.ksp", name = "symbol-processing-grad
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 androidx-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 androidx-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
+
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room-version" }
+room-ksp = { group = "androidx.room", name = "room-compiler", version.ref = "room-version" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room-version" }
 
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle-runtime-compose" }
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
@@ -79,6 +88,9 @@ retrofit-client = { group = "com.squareup.retrofit2", name = "retrofit", version
 retrofit-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
 
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+
+animations-core = { group = "io.github.raamcosta.compose-destinations", name = "animations-core", version.ref = "destinations" }
+accomponist-navigation-material = { group = "com.google.accompanist", name = "accompanist-navigation-material", version.ref = "accompanist-navigation" }
 
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 
