@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-src")
     repositories {
         google()
         mavenCentral()
@@ -15,4 +16,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "smartlab"
 include(":app")
-include(":build-src")

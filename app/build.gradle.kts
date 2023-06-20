@@ -25,17 +25,25 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName("debug") {
+            buildConfigField(
+                "String",
+                "SMARTLAB_URL",
+                "\"https://8e1d-109-171-32-98.ngrok-free.app/\""
+            )
+        }
+        getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField(
+                "String",
+                "SMARTLAB_URL",
+                "\"https://8e1d-109-171-32-98.ngrok-free.app/\""
+            )
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
@@ -81,8 +89,14 @@ dependencies {
     implementation(libs.retrofit.client)
     implementation(libs.retrofit.moshi)
 
+    implementation(libs.coil.compose)
+
+    implementation(libs.accompanist.placeholder)
+
     implementation(libs.hilt)
     kapt(libs.hilt.kapt)
+
+    implementation(libs.androidx.paging.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
@@ -111,6 +125,13 @@ dependencies {
 
     implementation(libs.retrofit.client)
     implementation(libs.retrofit.moshi)
+
+    implementation(libs.animations.core)
+    implementation(libs.accomponist.navigation.material)
+
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.ksp)
 
     implementation(libs.okhttp.client)
     implementation(libs.okhttp.logginginterceptor)
