@@ -8,11 +8,11 @@ interface BasketRepository {
 
     suspend fun addBasketItemToRoom(item: BasketDomain)
 
-//    suspend fun getBasketItem(id:Int)
+    suspend fun getBasketItem(cardId: Int): Int?
 
     suspend fun deleteBasketItemFromRoom(id: Int)
 
-    suspend fun incrementPatient(id:Int, countPatient: Int)
+    suspend fun incrementPatient(id: Int, countPatient: Int)
 
     suspend fun updateIsSelected(id: Int, isSelected: Boolean)
 

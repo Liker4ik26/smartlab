@@ -16,9 +16,8 @@ class BasketRepositoryImpl @Inject constructor(private val basketDao: BasketDao)
         basketDao.addBasketItem(item.asBasketEntity())
     }
 
-//    override suspend fun getBasketItem(id: Int) {
-//        basketDao.getBasketItem(id = id)
-//    }
+    override suspend fun getBasketItem(cardId: Int): Int? =
+        basketDao.getBasketItem(cardId = cardId)
 
     override suspend fun deleteBasketItemFromRoom(id: Int) =
         basketDao.deleteBasketItem(id = id)

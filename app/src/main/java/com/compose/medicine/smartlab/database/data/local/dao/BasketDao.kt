@@ -11,8 +11,8 @@ interface BasketDao {
     @Query("SELECT * FROM $BASKET_TABLE ORDER BY id ASC")
     suspend fun getBasketItems(): List<BasketEntity>
 
-//    @Query("SELECT * FROM $BASKET_TABLE WHERE id =:id")
-//    suspend fun getBasketItem(id: Int)
+    @Query("SELECT id FROM $BASKET_TABLE WHERE cardId =:cardId")
+    suspend fun getBasketItem(cardId: Int): Int?
 
     @Insert(entity = BasketEntity::class)
     suspend fun addBasketItem(item: BasketEntity)
