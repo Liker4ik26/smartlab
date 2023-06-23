@@ -2,6 +2,8 @@ package com.compose.medicine.smartlab.screens.patient_charts.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.compose.medicine.smartlab.api.data.MedicRepository
+import com.compose.medicine.smartlab.api.data.remote.models.PatientModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +14,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PatientChartsViewModel @Inject constructor() : ViewModel() {
+class PatientChartsViewModel @Inject constructor(private val repository: MedicRepository) :
+    ViewModel() {
 
     private val _state = MutableStateFlow(PatientChartsUiState.Empty)
     val state = _state.asStateFlow()
@@ -96,6 +99,46 @@ class PatientChartsViewModel @Inject constructor() : ViewModel() {
                     }
                 }
             }
+
+            is PatientChartsUiEvent.OnGenderInput -> {
+                viewModelScope.launch {
+                    _state.update { state ->
+                        if (event.gender.isEmpty()) {
+                            state.copy(
+                                gender = event.gender,
+                                isEnabled = false,
+                                isError = true
+                            )
+                        } else {
+                            state.copy(
+                                gender = event.gender,
+                                isEnabled = true,
+                                isError = false
+                            )
+                        }
+                    }
+                }
+            }
+
+            is PatientChartsUiEvent.OnLabelInput -> {
+                viewModelScope.launch {
+                    _state.update { state ->
+                        if (event.label.isEmpty()) {
+                            state.copy(
+                                label = event.label,
+                                isEnabled = false,
+                                isError = true
+                            )
+                        } else {
+                            state.copy(
+                                label = event.label,
+                                isEnabled = true,
+                                isError = false
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -113,6 +156,15 @@ class PatientChartsViewModel @Inject constructor() : ViewModel() {
             }
         } else {
             viewModelScope.launch {
+                repository.createPatient(
+                    patient = PatientModel(
+                        first_name = _state.value.name,
+                        last_name = _state.value.lastName,
+                        middle_name = _state.value.patronymic,
+                        date_of_birth = _state.value.birthdate,
+                        pol = _state.value.gender
+                    )
+                )
                 _state.update {
                     it.copy(
                         isError = false,

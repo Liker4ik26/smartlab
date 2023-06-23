@@ -33,12 +33,13 @@ import com.compose.medicine.smartlab.core_ui.components.BodyTextFieldHint
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GenderSelectionMenu() {
+fun GenderSelectionMenu(
+    label: String,
+    onValueChange: (String) -> Unit,
+    onClick: (String) -> Unit,
+) {
     var expanded by remember { mutableStateOf(false) }
     val gender = listOf("Мужской", "Женский")
-    var selectedGender by remember {
-        mutableStateOf("")
-    }
     var textFieldSize by remember {
         mutableStateOf(Size.Zero)
     }
@@ -49,8 +50,8 @@ fun GenderSelectionMenu() {
 
     Column {
         OutlinedTextField(
-            value = selectedGender,
-            onValueChange = { selectedGender = it },
+            value = label,
+            onValueChange = { onValueChange(it) },
             placeholder = { BodyTextFieldHint(text = "Пол") },
             readOnly = true,
             modifier = Modifier
@@ -94,9 +95,10 @@ fun GenderSelectionMenu() {
                         color = Color.Black
                     )
                 }, onClick = {
-                    selectedGender = label
+                    onClick(label)
                     expanded = false
-                })
+                }
+                )
             }
         }
     }

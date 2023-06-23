@@ -127,7 +127,11 @@ private fun PatientChartsScreen(
             onType = { viewModel.sendEvent(PatientChartsUiEvent.OnBirthdateInput(it)) }
         )
         Spacer(modifier = Modifier.height(24.dp))
-        GenderSelectionMenu()
+        GenderSelectionMenu(
+            label = state.label,
+            onValueChange = { viewModel.sendEvent(PatientChartsUiEvent.OnGenderInput(it)) },
+            onClick = { viewModel.sendEvent(PatientChartsUiEvent.OnLabelInput(it)) }
+        )
         Spacer(modifier = Modifier.height(48.dp))
         CreateButton(
             modifier = Modifier

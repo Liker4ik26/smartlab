@@ -8,6 +8,8 @@ data class PatientChartsUiState(
     val lastName: String = "",
     val patronymic: String = "",
     val birthdate: String = "",
+    val gender: String = "",
+    val label: String = "",
     val isEnabled: Boolean = false,
     val isError: Boolean = false
 ) {
@@ -21,6 +23,8 @@ sealed class PatientChartsUiEvent {
     class OnLastNameInput(val lastName: String) : PatientChartsUiEvent()
     class OnPatronymicInput(val patronymic: String) : PatientChartsUiEvent()
     class OnBirthdateInput(val birthdate: String) : PatientChartsUiEvent()
+    class OnGenderInput(val gender: String) : PatientChartsUiEvent()
+    class OnLabelInput(val label: String) : PatientChartsUiEvent()
     object OnNavigateToAnalyzes : PatientChartsUiEvent()
     object OnNavigateSkip : PatientChartsUiEvent()
 }

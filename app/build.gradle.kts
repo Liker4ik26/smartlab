@@ -29,7 +29,7 @@ android {
             buildConfigField(
                 "String",
                 "SMARTLAB_URL",
-                "\"https://7eb0-109-171-32-98.ngrok-free.app/\""
+                "\"https://4030-109-171-32-98.ngrok-free.app/\""
             )
         }
         getByName("release") {
@@ -41,7 +41,7 @@ android {
             buildConfigField(
                 "String",
                 "SMARTLAB_URL",
-                "\"https://7eb0-109-171-32-98.ngrok-free.app/\""
+                "\"https://4030-109-171-32-98.ngrok-free.app/\""
             )
         }
     }
