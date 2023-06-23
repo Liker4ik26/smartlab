@@ -1,5 +1,6 @@
 package com.compose.medicine.smartlab.api.data
 
+import com.compose.medicine.smartlab.api.data.remote.models.PatientModel
 import com.compose.medicine.smartlab.api.data.remote.models.UserModel
 import com.compose.medicine.smartlab.api.domain.CatalogDomain
 import com.compose.medicine.smartlab.api.domain.CategoryDomain
@@ -12,4 +13,5 @@ interface MedicRepository {
     suspend fun getNewsPageList(): Either<ErrorReason, List<NewsDomain>>
     suspend fun getCategoryList(): Either<ErrorReason, List<CategoryDomain>>
     suspend fun createUser(user: UserModel)
+    suspend fun createPatient(patient: PatientModel)
 }

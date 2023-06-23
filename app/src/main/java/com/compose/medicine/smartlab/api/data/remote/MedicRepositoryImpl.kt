@@ -2,6 +2,7 @@ package com.compose.medicine.smartlab.api.data.remote
 
 import android.content.Context
 import com.compose.medicine.smartlab.api.data.MedicRepository
+import com.compose.medicine.smartlab.api.data.remote.models.PatientModel
 import com.compose.medicine.smartlab.api.data.remote.models.UserModel
 import com.compose.medicine.smartlab.api.data.remote.models.mappers.asCategoryDomain
 import com.compose.medicine.smartlab.api.data.remote.models.mappers.toCatalogDomain
@@ -38,5 +39,9 @@ class MedicRepositoryImpl @Inject constructor(
         user: UserModel
     ) {
         medicApiDataSource.createUser(user)
+    }
+
+    override suspend fun createPatient(patient: PatientModel) {
+        medicApiDataSource.createPatient(patient)
     }
 }

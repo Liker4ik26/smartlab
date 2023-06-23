@@ -3,6 +3,7 @@ package com.compose.medicine.smartlab.api.data.remote
 import com.compose.medicine.smartlab.api.data.remote.models.CatalogPageResponse
 import com.compose.medicine.smartlab.api.data.remote.models.CategoryPageResponse
 import com.compose.medicine.smartlab.api.data.remote.models.NewsPageResponse
+import com.compose.medicine.smartlab.api.data.remote.models.PatientModel
 import com.compose.medicine.smartlab.api.data.remote.models.UserModel
 import com.compose.medicine.smartlab.core.ErrorReason
 import com.compose.medicine.smartlab.core.entity.Either
@@ -27,4 +28,7 @@ interface MedicApiDataSource {
 
     @POST("api/signup/")
     suspend fun createUser(@Body user: UserModel)
+
+    @POST("api/profiles/")
+    suspend fun createPatient(@Body patient: PatientModel)
 }
