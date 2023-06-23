@@ -66,7 +66,7 @@ fun AppHost() {
         AppNavigation(
             modifier = Modifier.padding(paddingValues),
             navController = navController,
-            startRoute = NavGraphs.splash,
+            startRoute = NavGraphs.analyzes,
             bottomSheetNavigator = bottomSheetNavigator
         )
     }

@@ -61,6 +61,7 @@ private fun AuthorizationScreen(
     }
 
     Column(modifier = modifier) {
+        Spacer(modifier = Modifier.height(40.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth()

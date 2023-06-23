@@ -181,6 +181,7 @@ fun BasketScreen(
                         containerColor = Color(0xFF1A6FEE),
                         disabledContainerColor = Color(0xFFC9D4FB)
                     ),
+                    enabled = state.basketList.isNotEmpty(),
                     onClick = {
                         viewModel.sendEvent(BasketUiEvent.OnNavigateToCheckoutScreen)
                     }

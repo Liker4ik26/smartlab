@@ -23,7 +23,6 @@ sealed class BasketUiEvent {
         BasketUiEvent()
 
     object DeleteAllAnalyzesFromBasket : BasketUiEvent()
-    class OnSumCalculation(val sum: Int, val price: String) : BasketUiEvent()
     class DeleteAnalysisToBasket(val id: Int) : BasketUiEvent()
     object OnNavigateToCheckoutScreen : BasketUiEvent()
     object OnNavigateBack : BasketUiEvent()

@@ -8,6 +8,7 @@ import com.compose.medicine.smartlab.api.domain.CategoryDomain
 import com.compose.medicine.smartlab.api.domain.NewsDomain
 import com.compose.medicine.smartlab.core.entity.unpack
 import com.compose.medicine.smartlab.database.data.local.BasketRepository
+import com.compose.medicine.smartlab.screens.analyzes.presentation.models.mappers.analyzes_mappers.asAnalItemUi
 import com.compose.medicine.smartlab.screens.analyzes.presentation.models.mappers.analyzes_mappers.asAnalyzesItemUi
 import com.compose.medicine.smartlab.screens.analyzes.presentation.models.mappers.analyzes_mappers.asBasketDomain
 import com.compose.medicine.smartlab.screens.analyzes.presentation.models.mappers.category_mappers.asCategoryItemUi
@@ -37,6 +38,7 @@ class AnalyzesViewModel @Inject constructor(
     init {
         _state.update { it.copy(isLoading = true) }
         loadAnalyzes()
+        loadLocalAnalyzes()
         loadNews()
         loadCategory()
     }
@@ -44,7 +46,25 @@ class AnalyzesViewModel @Inject constructor(
     fun sendEvent(event: AnalyzesUiEvent) {
         when (event) {
             is AnalyzesUiEvent.OnSearchInput -> {
-                viewModelScope.launch { _state.update { it.copy(search = event.search) } }
+                viewModelScope.launch {
+                    if (event.search.isNotEmpty()) {
+                        _state.update {
+                            it.copy(search = event.search)
+                        }
+                    }
+                }
+            }
+
+            is AnalyzesUiEvent.OnClickClear -> {
+                _state.update {
+                    it.copy(search = "")
+                }
+            }
+
+            is AnalyzesUiEvent.OnNavigateBack -> {
+                viewModelScope.launch {
+                    _effect.emit(AnalyzesUiEffect.NavigateBack)
+                }
             }
 
             is AnalyzesUiEvent.OnNavigateToBasketScreen -> {
@@ -81,8 +101,8 @@ class AnalyzesViewModel @Inject constructor(
             is AnalyzesUiEvent.AddAnalysisToBasket -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     _state.update { it.copy(price = _state.value.price + event.price) }
-
                     repository.addBasketItemToRoom(item = event.analysis.asBasketDomain())
+                    loadAnalyzes()
                 }
             }
 
@@ -97,6 +117,16 @@ class AnalyzesViewModel @Inject constructor(
                 viewModelScope.launch(Dispatchers.IO) {
                     repository.updateIsSelected(id = event.id, isSelected = event.isSelected)
 //                    loadLocalBasket()
+                }
+            }
+
+            is AnalyzesUiEvent.OnSearching -> {
+                searching()
+            }
+
+            is AnalyzesUiEvent.OnActiveChanged -> {
+                _state.update {
+                    it.copy(isActive = event.isActive)
                 }
             }
 
@@ -119,6 +149,15 @@ class AnalyzesViewModel @Inject constructor(
 //        }
 //    }
 //
+
+    private fun loadLocalAnalyzes() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val basket = repository.getBasketFromRoom().map { basketDomain ->
+                basketDomain.asAnalItemUi()
+            }
+            _state.update { it.copy(analyzesFromDb = basket) }
+        }
+    }
 
     private fun loadAnalyzes() {
         viewModelScope.launch {
@@ -157,7 +196,7 @@ class AnalyzesViewModel @Inject constructor(
                         it.copy(
                             news = news,
                             isLoading = false,
-                            isRefreshing = true
+                            isRefreshing = true,
                         )
                     }
                 },
@@ -166,7 +205,7 @@ class AnalyzesViewModel @Inject constructor(
                         it.copy(
                             errorMessage = errorMessage.details,
                             isLoading = false,
-                            isRefreshing = false
+                            isRefreshing = false,
                         )
                     }
                 }
@@ -184,6 +223,34 @@ class AnalyzesViewModel @Inject constructor(
                             category = category,
                             isLoading = false,
                             isRefreshing = false
+                        )
+                    }
+                },
+                error = { errorMessage ->
+                    _state.update {
+                        it.copy(
+                            errorMessage = errorMessage.details,
+                            isLoading = false,
+                            isRefreshing = false
+                        )
+                    }
+                }
+            )
+        }
+    }
+
+    private fun searching() {
+        viewModelScope.launch {
+            medicRepository.getAnalysisCatalogPagedFlow().unpack(
+                success = { data ->
+                    val searchList = data.map(CatalogDomain::asAnalyzesItemUi)
+                    _state.update {
+                        it.copy(
+                            searchList = searchList.filter { searchItem ->
+                                searchItem.name!!.contains(it.search)
+                            },
+                            isLoading = false,
+                            isRefreshing = false,
                         )
                     }
                 },

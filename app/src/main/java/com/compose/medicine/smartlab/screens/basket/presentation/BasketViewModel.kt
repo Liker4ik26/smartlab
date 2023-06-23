@@ -43,7 +43,6 @@ class BasketViewModel @Inject constructor(
                 }
             }
 
-            is BasketUiEvent.OnSumCalculation -> {}
             is BasketUiEvent.OnRemovePatient -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     if (event.countPatient > 1) {
@@ -78,6 +77,7 @@ class BasketViewModel @Inject constructor(
                     repository.deleteAllAnalyzes()
                     loadBasket()
                 }
+                _state.update { it.copy(sum = 0.0) }
             }
         }
     }

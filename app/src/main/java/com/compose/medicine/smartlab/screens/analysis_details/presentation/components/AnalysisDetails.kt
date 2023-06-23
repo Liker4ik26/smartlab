@@ -28,7 +28,8 @@ fun AnalysisDetails(
     result: String,
     biomaterial: String,
     price: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onAddToBasket: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -128,7 +129,7 @@ fun AnalysisDetails(
         Spacer(modifier = Modifier.height(20.dp))
         AddButton(modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp), textButton = price, onClick = { })
+            .height(56.dp), textButton = price, onClick = { onAddToBasket() })
         Spacer(modifier = Modifier.height(56.dp))
     }
 }

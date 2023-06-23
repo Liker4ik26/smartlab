@@ -8,6 +8,7 @@ data class AnalysisDetailsNavArgs(val analysisDetails: AnalysisDetails)
 @Parcelize
 data class AnalysisDetails(
     val id: Int,
+    val cardId: Int,
     val title: String?,
     val description: String?,
     val preparation: String?,

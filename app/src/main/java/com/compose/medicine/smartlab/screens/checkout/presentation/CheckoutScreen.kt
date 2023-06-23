@@ -47,7 +47,8 @@ fun CheckoutScreen(navigator: CheckoutNavigation) {
         onNavigateToTestingAddressScreen = navigator::navigateToTestingAddressScreen,
         onNavigateToDateAndTimeScreen = navigator::navigateToDateAndTimeScreen,
         onNavigateToPatientCharts = navigator::navigateToPatientChartsScreen,
-        onNavigateToPatientChoice = navigator::navigateToPatientChoiceScreen
+        onNavigateToPatientChoice = navigator::navigateToPatientChoiceScreen,
+        onNavigateBack = navigator::navigateBack,
     )
 }
 
@@ -57,7 +58,8 @@ private fun CheckoutScreen(
     onNavigateToTestingAddressScreen: () -> Unit,
     onNavigateToDateAndTimeScreen: () -> Unit,
     onNavigateToPatientCharts: () -> Unit,
-    onNavigateToPatientChoice: () -> Unit
+    onNavigateToPatientChoice: () -> Unit,
+    onNavigateBack: () -> Unit
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -69,6 +71,7 @@ private fun CheckoutScreen(
                 is CheckoutUiEffect.NavigateToDateAndTimeScreen -> onNavigateToDateAndTimeScreen()
                 is CheckoutUiEffect.NavigateToPatientCharts -> onNavigateToPatientCharts()
                 is CheckoutUiEffect.NavigateToPatientChoice -> onNavigateToPatientChoice()
+                is CheckoutUiEffect.NavigateBack -> onNavigateBack()
             }
         }
     }
@@ -80,7 +83,7 @@ private fun CheckoutScreen(
     ) {
         IconButton(
             modifier = Modifier.padding(horizontal = 20.dp),
-            onClick = {},
+            onClick = { viewModel.sendEvent(CheckoutUiEvent.OnNavigateBack) },
             colors = IconButtonDefaults.iconButtonColors(containerColor = Color(0xFFF5F5F9)),
         ) {
             Icon(

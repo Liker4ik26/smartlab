@@ -43,6 +43,12 @@ class CheckoutViewModel @Inject constructor() : ViewModel() {
                     _effect.emit(CheckoutUiEffect.NavigateToPatientChoice)
                 }
             }
+
+            is CheckoutUiEvent.OnNavigateBack -> {
+                viewModelScope.launch {
+                    _effect.emit(CheckoutUiEffect.NavigateBack)
+                }
+            }
         }
     }
 }

@@ -5,4 +5,5 @@ import com.compose.medicine.smartlab.screens.analyzes.presentation.models.Analys
 interface AnalysisNavigation {
     fun openAnalysisDetails(analysisDetailsNavArg: AnalysisDetailsNavArg)
     fun navigateToBasketScreen()
+    fun navigateBack()
 }

@@ -18,7 +18,8 @@ data class AnalysisDetailsUiState(
 }
 
 sealed class AnalysisDetailsUiEvent {
-    object onBack : AnalysisDetailsUiEvent()
+    object OnBack : AnalysisDetailsUiEvent()
+    object OnAddToBasket : AnalysisDetailsUiEvent()
 }
 
 sealed class AnalysisDetailsUiEffect {

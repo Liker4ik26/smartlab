@@ -52,9 +52,9 @@ private fun AnalysisDetailsScreen(
             preparation = state.preparation?.asString(),
             result = state.timeResult,
             biomaterial = state.biomaterial,
-            price = state.price
-        ) {
-            viewModel.sendEvent(AnalysisDetailsUiEvent.onBack)
-        }
+            price = state.price,
+            onAddToBasket = { viewModel.sendEvent(AnalysisDetailsUiEvent.OnAddToBasket) },
+            onClick = { viewModel.sendEvent(AnalysisDetailsUiEvent.OnBack) }
+        )
     }
 }

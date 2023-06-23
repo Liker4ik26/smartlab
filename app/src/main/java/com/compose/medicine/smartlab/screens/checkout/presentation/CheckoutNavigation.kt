@@ -5,4 +5,5 @@ interface CheckoutNavigation {
     fun navigateToDateAndTimeScreen()
     fun navigateToPatientChartsScreen()
     fun navigateToPatientChoiceScreen()
+    fun navigateBack()
 }

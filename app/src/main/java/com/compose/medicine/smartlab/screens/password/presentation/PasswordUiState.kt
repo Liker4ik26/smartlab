@@ -14,8 +14,10 @@ data class PasswordUiState(
 sealed class PasswordUiEvent {
     class OnNameInput(val pin: String) : PasswordUiEvent()
     object OnNavigateToPatientCharts : PasswordUiEvent()
+    object OnNavigateToPatientChartsWithPassword : PasswordUiEvent()
+
 }
 
 sealed class PasswordEffect {
-    object NavigateToPatientCharts: PasswordEffect()
+    object NavigateToPatientCharts : PasswordEffect()
 }

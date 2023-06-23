@@ -1,5 +1,6 @@
 package com.compose.medicine.smartlab.screens.password.presentation
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -36,6 +38,7 @@ private fun PasswordScreen(
     viewModel: PasswordViewModel = hiltViewModel(),
     onNavigateToPatientCharts: () -> Unit
 ) {
+    val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
@@ -70,7 +73,7 @@ private fun PasswordScreen(
         PinLock(title = { pinExists ->
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = if (pinExists) "Создайте пароль" else "Введите пароль",
+                    text = if (!pinExists) "Создайте пароль" else "Введите пароль",
                     color = Color.Black,
                     style = MaterialTheme.typography.titleLarge
                 )
@@ -82,7 +85,14 @@ private fun PasswordScreen(
                 )
             }
             Spacer(modifier = Modifier.height(56.dp))
-        }, color = Color(0xFFFEFEFE), onPinCorrect = { /*TODO*/ }, onPinIncorrect = { /*TODO*/ }) {
+        },
+            color = Color(0xFFFEFEFE),
+            onPinCorrect = { Toast.makeText(context, "PIN is correct", Toast.LENGTH_SHORT).show() },
+            onPinIncorrect = {
+                Toast.makeText(context, "PIN is incorrect", Toast.LENGTH_SHORT).show()
+            }
+        ) {
+            Toast.makeText(context, "PIN has been created", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -76,7 +76,7 @@ fun AnalysisCard(
                         .border(1.dp, Color(0xFF1A6FEE), RoundedCornerShape(10.dp))
                         .width(116.dp)
                         .height(34.dp),
-                    isSelected = analysis.isSelected,
+                    isSelected = true,
                     onClickAdd = { onClickAdd(analysis) },
                     onClickDelete = { onClickDelete(analysis) }
                 )

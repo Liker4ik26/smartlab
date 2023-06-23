@@ -103,7 +103,7 @@ object NavGraphs {
 
     val root = object : NavGraphSpec {
         override val route = "root"
-        override val startRoute = splash
+        override val startRoute = analyzes
         override val destinationsByRoute = emptyMap<String, DestinationSpec<*>>()
         override val nestedNavGraphs = listOf(
             splash,

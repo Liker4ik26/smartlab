@@ -6,6 +6,7 @@ import com.compose.medicine.smartlab.screens.analyzes.presentation.models.Analys
 fun AnalysisDetailsNavArg.asDetails(): AnalysisDetails {
     return AnalysisDetails(
         id = id,
+        cardId = cardId,
         title = name,
         description = description,
         preparation = preparation,

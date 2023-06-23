@@ -16,6 +16,7 @@ sealed class CheckoutUiEvent {
     object OnNavigateToDateAndTimeScreen : CheckoutUiEvent()
     object OnNavigateToPatientCharts : CheckoutUiEvent()
     object OnNavigateToPatientChoice : CheckoutUiEvent()
+    object OnNavigateBack : CheckoutUiEvent()
 }
 
 sealed class CheckoutUiEffect {
@@ -23,4 +24,5 @@ sealed class CheckoutUiEffect {
     object NavigateToDateAndTimeScreen : CheckoutUiEffect()
     object NavigateToPatientCharts : CheckoutUiEffect()
     object NavigateToPatientChoice : CheckoutUiEffect()
+    object NavigateBack : CheckoutUiEffect()
 }

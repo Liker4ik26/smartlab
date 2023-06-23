@@ -30,6 +30,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -50,7 +51,8 @@ import com.ramcosta.composedestinations.annotation.Destination
 fun AnalyzesScreen(navigation: AnalysisNavigation) {
     AnalyzesScreen(
         openDetails = navigation::openAnalysisDetails,
-        onNavigateToBasketScreen = navigation::navigateToBasketScreen
+        onNavigateToBasketScreen = navigation::navigateToBasketScreen,
+        onNavigateBack = navigation::navigateBack
     )
 }
 
@@ -58,6 +60,7 @@ fun AnalyzesScreen(navigation: AnalysisNavigation) {
 private fun AnalyzesScreen(
     openDetails: (AnalysisDetailsNavArg) -> Unit,
     onNavigateToBasketScreen: () -> Unit,
+    onNavigateBack: () -> Unit,
     viewModel: AnalyzesViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -67,6 +70,7 @@ private fun AnalyzesScreen(
             when (effect) {
                 is AnalyzesUiEffect.NavigateToAnalysisDetails -> openDetails(effect.analysis)
                 is AnalyzesUiEffect.NavigateToBasketScreen -> onNavigateToBasketScreen()
+                is AnalyzesUiEffect.NavigateBack -> onNavigateBack()
             }
         }
     }
@@ -77,6 +81,26 @@ private fun AnalyzesScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
+            SearchTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(10.dp)),
+                query = state.search,
+                onQueryChange = { viewModel.sendEvent(AnalyzesUiEvent.OnSearchInput(it)) },
+                onSearch = { viewModel.sendEvent(AnalyzesUiEvent.OnSearching) },
+                active = state.isActive,
+                onActiveChange = {
+                    viewModel.sendEvent(
+                        AnalyzesUiEvent.OnActiveChanged(
+                            isActive = it
+                        )
+                    )
+                },
+                hint = "Искать анализы",
+                analyzes = state.searchList,
+                onBack = { viewModel.sendEvent(AnalyzesUiEvent.OnActiveChanged(isActive = false)) },
+                onClickCancel = { viewModel.sendEvent(AnalyzesUiEvent.OnClickClear) }
+            )
             if (state.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
@@ -85,20 +109,12 @@ private fun AnalyzesScreen(
             } else {
                 Column(
                     modifier = Modifier
+                        .padding(top = 100.dp)
                         .fillMaxWidth()
                         .background(color = Color(0xFFF9F9FC))
                         .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    SearchTextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp),
-                        text = state.search,
-                        hint = "Искать анализы",
-                        isError = false,
-                        onType = { viewModel.sendEvent(AnalyzesUiEvent.OnSearchInput(it)) })
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         modifier = Modifier
@@ -151,9 +167,7 @@ private fun AnalyzesScreen(
                                 },
                                 onRemove = {
                                     viewModel.sendEvent(
-                                        AnalyzesUiEvent.RemoveIndexChip(
-                                            categoryItem.id
-                                        )
+                                        AnalyzesUiEvent.RemoveIndexChip()
                                     )
                                 },
                                 selectedCategory = state.selectedCategory

@@ -52,9 +52,13 @@ fun WelcomeScreen(navigator: OnBoardScreenNavigation) {
         initialPageOffsetFraction = 0f
     ) { 3 }
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(top = 40.dp)) {
+    Spacer(modifier = Modifier.height(40.dp))
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 40.dp)
+    ) {
         HorizontalPager(
             state = pagerState,
             userScrollEnabled = true,

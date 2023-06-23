@@ -2,6 +2,8 @@ package com.compose.medicine.smartlab.screens.authorization.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.compose.medicine.smartlab.api.data.MedicRepository
+import com.compose.medicine.smartlab.api.data.remote.models.UserModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +15,7 @@ import java.util.regex.Pattern
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthorizationViewModel @Inject constructor() : ViewModel() {
+class AuthorizationViewModel @Inject constructor(val repository: MedicRepository) : ViewModel() {
 
     private val _state = MutableStateFlow(AuthorizationUiState.Empty)
     val state = _state.asStateFlow()
@@ -44,6 +46,12 @@ class AuthorizationViewModel @Inject constructor() : ViewModel() {
     private fun checkAuthorizedStatus() {
         if (checkEmail(_state.value.email)) {
             viewModelScope.launch {
+                repository.createUser(
+                    user = UserModel(
+                        email = _state.value.email,
+                        password = "1"
+                    )
+                )
                 _state.update {
                     it.copy(
                         isError = false,
