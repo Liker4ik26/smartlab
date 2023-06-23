@@ -200,7 +200,8 @@ private fun AnalyzesScreen(
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 20.dp)
+                                .padding(horizontal = 20.dp),
+                            localAnalyzes = state.analyzesFromDb
                         )
                     }
                     Spacer(modifier = Modifier.height(90.dp))

@@ -27,6 +27,7 @@ import com.compose.medicine.smartlab.screens.analyzes.presentation.models.Analys
 fun AnalysisCard(
     modifier: Modifier = Modifier,
     analysis: AnalysisItemUi,
+    localAnalyzes: List<AnalysisItemUi>,
     onClick: (AnalysisItemUi) -> Unit,
     onClickAdd: (AnalysisItemUi) -> Unit,
     onClickDelete: (AnalysisItemUi) -> Unit,
@@ -76,7 +77,9 @@ fun AnalysisCard(
                         .border(1.dp, Color(0xFF1A6FEE), RoundedCornerShape(10.dp))
                         .width(116.dp)
                         .height(34.dp),
-                    isSelected = true,
+                    isSelected = if (localAnalyzes.isNotEmpty()) {
+                        localAnalyzes[analysis.cardId].cardId == analysis.cardId
+                    } else false,
                     onClickAdd = { onClickAdd(analysis) },
                     onClickDelete = { onClickDelete(analysis) }
                 )

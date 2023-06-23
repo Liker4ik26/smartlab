@@ -109,7 +109,8 @@ class AnalyzesViewModel @Inject constructor(
             is AnalyzesUiEvent.DeleteAnalysisToBasket -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     repository.deleteBasketItemFromRoom(id = event.analysis.id)
-//                    repository.getBasketItem(id = event.analysis.id)
+
+                    //                    repository.getBasketItem(id = event.analysis.id)
                 }
             }
 
