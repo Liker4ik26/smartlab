@@ -1,10 +1,14 @@
 package com.compose.medicine.smartlab.screens.patient_charts.presentation
 
+import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.compose.medicine.smartlab.api.data.MedicRepository
 import com.compose.medicine.smartlab.api.data.remote.models.PatientModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -14,8 +18,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PatientChartsViewModel @Inject constructor(private val repository: MedicRepository) :
-    ViewModel() {
+class PatientChartsViewModel @Inject constructor(
+    private val repository: MedicRepository,
+    @ApplicationContext private val context: Context
+) : ViewModel() {
 
     private val _state = MutableStateFlow(PatientChartsUiState.Empty)
     val state = _state.asStateFlow()
@@ -156,25 +162,28 @@ class PatientChartsViewModel @Inject constructor(private val repository: MedicRe
             }
         } else {
             viewModelScope.launch {
-                repository.createPatient(
-                    patient = PatientModel(
-                        first_name = _state.value.name,
-                        last_name = _state.value.lastName,
-                        middle_name = _state.value.patronymic,
-                        date_of_birth = _state.value.birthdate,
-                        pol = _state.value.gender
+                try {
+                    repository.createPatient(
+                        patient = PatientModel(
+                            first_name = _state.value.name,
+                            last_name = _state.value.lastName,
+                            middle_name = _state.value.patronymic,
+                            date_of_birth = _state.value.birthdate,
+                            pol = _state.value.gender
+                        )
                     )
-                )
-                _state.update {
-                    it.copy(
-                        isError = false,
-                        isEnabled = true
-                    )
+                    _state.update {
+                        it.copy(
+                            isError = false,
+                            isEnabled = true
+                        )
+                    }
+                    _effect.emit(PatientChartsEffect.NavigateToAnalyzes)
+                } catch (e: Exception) {
+                    Log.e("Create profile", e.message.toString())
+                    Toast.makeText(context, e.message.toString(), Toast.LENGTH_LONG).show()
                 }
-                _effect.emit(PatientChartsEffect.NavigateToAnalyzes)
             }
         }
     }
 }
-
-

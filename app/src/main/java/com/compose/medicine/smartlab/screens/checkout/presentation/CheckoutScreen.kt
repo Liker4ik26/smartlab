@@ -49,6 +49,7 @@ fun CheckoutScreen(navigator: CheckoutNavigation) {
         onNavigateToPatientCharts = navigator::navigateToPatientChartsScreen,
         onNavigateToPatientChoice = navigator::navigateToPatientChoiceScreen,
         onNavigateBack = navigator::navigateBack,
+        onNavigateToSuccessfulScreen = navigator::navigateToSuccessfulPayment
     )
 }
 
@@ -59,7 +60,8 @@ private fun CheckoutScreen(
     onNavigateToDateAndTimeScreen: () -> Unit,
     onNavigateToPatientCharts: () -> Unit,
     onNavigateToPatientChoice: () -> Unit,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onNavigateToSuccessfulScreen: () -> Unit
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -72,6 +74,7 @@ private fun CheckoutScreen(
                 is CheckoutUiEffect.NavigateToPatientCharts -> onNavigateToPatientCharts()
                 is CheckoutUiEffect.NavigateToPatientChoice -> onNavigateToPatientChoice()
                 is CheckoutUiEffect.NavigateBack -> onNavigateBack()
+                is CheckoutUiEffect.NavigateToSuccessfulScreen -> onNavigateToSuccessfulScreen()
             }
         }
     }
@@ -225,10 +228,10 @@ private fun CheckoutScreen(
                 .height(56.dp)
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
-            text = "",
+            text = state.phoneNumber,
             hint = "Введите телефон",
             isError = false,
-            onType = {},
+            onType = { viewModel.sendEvent(CheckoutUiEvent.OnPhoneNumberInput(it)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -293,9 +296,9 @@ private fun CheckoutScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Оплата Apple Pay",
+                        text = "Промокод",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = Color.Black
+                        color = Color.Black.copy(0.4F)
                     )
                     Icon(
                         painter = painterResource(id = R.drawable.chevron_right),
@@ -329,6 +332,7 @@ private fun CheckoutScreen(
                         disabledContainerColor = Color(0xFFC9D4FB)
                     ),
                     onClick = {
+                        viewModel.sendEvent(CheckoutUiEvent.OnNavigateToSuccessfulScreen)
                     }
                 ) {
                     Text(

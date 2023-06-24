@@ -1,6 +1,5 @@
 package com.compose.medicine.smartlab.navigation
 
-import android.content.Context
 import androidx.navigation.NavController
 import com.compose.medicine.smartlab.navigation.models.mappers.asDetails
 import com.compose.medicine.smartlab.screens.analysis_details.presentation.AnalysisDetailsNavigation
@@ -25,7 +24,6 @@ import com.ramcosta.composedestinations.navigation.navigate
 import com.ramcosta.composedestinations.spec.NavGraphSpec
 
 class CommonNavGraphNavigator(
-    private val context: Context,
     private val navGraph: NavGraphSpec,
     private val navController: NavController
 ) : OnBoardScreenNavigation, AuthorizationScreenNavigation, VerificationNavigation,
@@ -42,6 +40,10 @@ class CommonNavGraphNavigator(
 
     override fun navigateBack() {
         navController.navigateUp()
+    }
+
+    override fun navigateToSuccessfulPayment() {
+        navController.navigate(NavGraphs.successful_payments)
     }
 
     override fun navigateToCheckoutScreen() {

@@ -6,4 +6,5 @@ interface CheckoutNavigation {
     fun navigateToPatientChartsScreen()
     fun navigateToPatientChoiceScreen()
     fun navigateBack()
+    fun navigateToSuccessfulPayment()
 }

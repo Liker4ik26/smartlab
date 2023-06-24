@@ -46,7 +46,6 @@ fun NavDestination.navGraph(): NavGraphSpec {
 
 fun DependenciesContainerBuilder<*>.currentNavigator(context: Context): CommonNavGraphNavigator {
     return CommonNavGraphNavigator(
-        context,
         navBackStackEntry.destination.navGraph(),
         navController
     )

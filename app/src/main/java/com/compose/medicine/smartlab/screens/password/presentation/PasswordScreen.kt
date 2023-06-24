@@ -75,7 +75,7 @@ private fun PasswordScreen(
                 Text(
                     text = if (!pinExists) "Создайте пароль" else "Введите пароль",
                     color = Color.Black,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleLarge,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
@@ -87,12 +87,13 @@ private fun PasswordScreen(
             Spacer(modifier = Modifier.height(56.dp))
         },
             color = Color(0xFFFEFEFE),
-            onPinCorrect = { Toast.makeText(context, "PIN is correct", Toast.LENGTH_SHORT).show() },
+            onPinCorrect = { viewModel.sendEvent(PasswordUiEvent.OnNavigateToPatientCharts) },
             onPinIncorrect = {
                 Toast.makeText(context, "PIN is incorrect", Toast.LENGTH_SHORT).show()
             }
         ) {
             Toast.makeText(context, "PIN has been created", Toast.LENGTH_SHORT).show()
+            viewModel.sendEvent(PasswordUiEvent.OnNavigateToPatientCharts)
         }
     }
 }

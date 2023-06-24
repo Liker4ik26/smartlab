@@ -77,9 +77,7 @@ fun AnalysisCard(
                         .border(1.dp, Color(0xFF1A6FEE), RoundedCornerShape(10.dp))
                         .width(116.dp)
                         .height(34.dp),
-                    isSelected = if (localAnalyzes.isNotEmpty()) {
-                        localAnalyzes[analysis.cardId].cardId == analysis.cardId
-                    } else false,
+                    isSelected = false,
                     onClickAdd = { onClickAdd(analysis) },
                     onClickDelete = { onClickDelete(analysis) }
                 )

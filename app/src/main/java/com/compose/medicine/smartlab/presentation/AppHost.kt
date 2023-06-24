@@ -15,8 +15,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.plusAssign
+import com.compose.medicine.smartlab.MainViewModel
 import com.compose.medicine.smartlab.core_ui.currentBottomItemToState
 import com.compose.medicine.smartlab.navigation.NavGraphs
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -26,7 +29,8 @@ import com.ramcosta.composedestinations.navigation.navigate
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialNavigationApi::class)
 @Composable
-fun AppHost() {
+fun AppHost(viewModel: MainViewModel = hiltViewModel()) {
+    val state = viewModel.state.collectAsStateWithLifecycle()
     val navController = rememberAnimatedNavController()
     val visibleEntries by navController.visibleEntries.collectAsState()
     val isBottomNavigationBarVisible = visibleEntries.any { entry ->
@@ -66,7 +70,7 @@ fun AppHost() {
         AppNavigation(
             modifier = Modifier.padding(paddingValues),
             navController = navController,
-            startRoute = NavGraphs.splash,
+            startRoute = NavGraphs.successful_payments,
             bottomSheetNavigator = bottomSheetNavigator
         )
     }

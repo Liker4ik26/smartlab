@@ -10,6 +10,7 @@ import com.compose.medicine.smartlab.screens.destinations.PasswordScreenDestinat
 import com.compose.medicine.smartlab.screens.destinations.PatientChartsScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.PatientChoiceScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.SplashScreenDestination
+import com.compose.medicine.smartlab.screens.destinations.SuccessfulPaymentScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.TestingAddressScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.UserProfileScreenDestination
 import com.compose.medicine.smartlab.screens.destinations.VerificationScreenDestination
@@ -101,6 +102,14 @@ object NavGraphs {
         ).routedIn(this).associateBy { it.route }
     }
 
+    val successful_payments = object : NavGraphSpec {
+        override val route = "successful_payments"
+        override val startRoute = SuccessfulPaymentScreenDestination routedIn this
+        override val destinationsByRoute = listOf<DestinationSpec<*>>(
+            SuccessfulPaymentScreenDestination,
+        ).routedIn(this).associateBy { it.route }
+    }
+
     val root = object : NavGraphSpec {
         override val route = "root"
         override val startRoute = splash
@@ -115,7 +124,8 @@ object NavGraphs {
             password,
             patient_chart,
             basket,
-            checkout
+            checkout,
+            successful_payments
         )
     }
 }

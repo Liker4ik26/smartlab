@@ -37,6 +37,7 @@ class AnalyzesViewModel @Inject constructor(
 
     init {
         _state.update { it.copy(isLoading = true) }
+        count()
         loadAnalyzes()
         loadLocalAnalyzes()
         loadNews()
@@ -100,7 +101,7 @@ class AnalyzesViewModel @Inject constructor(
 
             is AnalyzesUiEvent.AddAnalysisToBasket -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    _state.update { it.copy(price = _state.value.price + event.price) }
+                    _state.update { it.copy(price = it.price + event.price) }
                     repository.addBasketItemToRoom(item = event.analysis.asBasketDomain())
                     loadAnalyzes()
                 }
@@ -185,6 +186,14 @@ class AnalyzesViewModel @Inject constructor(
                     }
                 }
             )
+        }
+    }
+
+    private fun count() {
+        viewModelScope.launch {
+            repository.getBasketFromRoom().map { basketDomain ->
+                _state.update { it.copy(price = it.price + basketDomain.price.toDouble()) }
+            }
         }
     }
 

@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -48,6 +49,16 @@ class CheckoutViewModel @Inject constructor() : ViewModel() {
                 viewModelScope.launch {
                     _effect.emit(CheckoutUiEffect.NavigateBack)
                 }
+            }
+
+            is CheckoutUiEvent.OnNavigateToSuccessfulScreen -> {
+                viewModelScope.launch {
+                    _effect.emit(CheckoutUiEffect.NavigateToSuccessfulScreen)
+                }
+            }
+
+            is CheckoutUiEvent.OnPhoneNumberInput -> {
+                _state.update { it.copy(phoneNumber = event.phoneNumber) }
             }
         }
     }
